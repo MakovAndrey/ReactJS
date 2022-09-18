@@ -1,38 +1,48 @@
-import { Form } from "./components/Form/Form";
-import { Form as FormClass } from "./class_components/Form";
-import { Count as CountClass } from "./class_components/Counter";
-import { Count } from "./components/Count";
-import { Child } from "./components/Child";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { MessageForm } from "./components/MessageForm/MessageForm.jsx";
+import { MessageList } from "./components/MessageList/MessageList"
 
-import "./index.css";
+const autoAnswer = "Спасибо за ваш отзыв!";
 
-export const App = () => {
-    const [name, setName] = useState("mike")
-    const [count, setCount] = useState(0)
-    const arr = ["john", "elena", "sandra"]
+export function App() {
+    const [name, setName] = useState('');
+    const [messages, setMessages] = useState([]);
+    const [message] = useState('');
 
-    const handleChangeName = (ev) => {
-        setName(ev.target.value)
+
+    const addMessage = (message, name) => {
+        setMessages((messagesPrev) => [
+            ...messagesPrev,
+            { author: name, text: message },
+        ]);
     };
 
+    useEffect(() => {
+        const messagePrev = messages[messages.length - 1];
+        console.log(messages.length);
+        
+        // console.log(message);
+        let timeout;
+        if (
+            messages.length > 0 &&
+            messages[messages.length - 1].author !== "Администратор"
+        ) {
+            console.log(messages.length);
+            console.log(messages[messages.length - 1].author);
+            timeout = setTimeout(() => {
+                addMessage(autoAnswer, "Администратор");
+                console.log(messagePrev.author);
+            }, 1500);
+        }
+        return () => clearTimeout(timeout);
+    }, [messages, name]);
+
     return (
-        <div className="Form">
-            <h2 style={{ backgroundColor: "lightgrey" }}>Classs components</h2>
-            <CountClass count={10} />
+        <>
+            <MessageForm messageSetter={addMessage} author={name} />
+            <br />
             <hr />
-            <FormClass />
-            <hr />
-            <h2>Func components</h2>
-            <Count />
-            <hr />
-            <h3>Parent component</h3>
-            <p>{count}</p>
-            <input onChange={handleChangeName} />
-            <h3>Child component</h3>
-            <Child name={name} handleChangeCount={setCount} />
-            {arr.map((item, idx) => (<div key={idx}>{item}</div>))}
-            <Form />
-        </div>
+            <MessageList messageList={messages} />
+        </>
     );
-};
+}
