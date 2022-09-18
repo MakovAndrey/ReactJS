@@ -1,11 +1,13 @@
-// import React from "react";
+import React from "react";
 
-export function MessageForm({messageSetter}) {
+export function MessageForm({messageSetter, author}) {
     const addMessageHandler = (e) => {
         e.preventDefault();
-        messageSetter(e.target.message.value, e.target.name.value);
-            e.target.message.value = "";
-            e.target.author.value = "";
+        const { message } = e.target.elements
+        const { author } = e.target.elements;
+        messageSetter(message.value, author.value);
+        message.value = "";
+        author.value = "";
     };
 
     return (
@@ -17,10 +19,9 @@ export function MessageForm({messageSetter}) {
                 placeholder="Write your message"
             />
             <input 
-                type="text"
+                type="text" 
                 name="author" 
-                placeholder="Write your name" 
-            />
+                placeholder="Write your name" />
             <button>Send message</button>
         </form>
     );

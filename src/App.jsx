@@ -2,33 +2,47 @@ import { useEffect, useState } from "react";
 import { MessageForm } from "./components/MessageForm/MessageForm.jsx";
 import { MessageList } from "./components/MessageList/MessageList"
 
-export const App = () => {
-    const author = useState([author]);
-    const [messages, setMessages] = useState([]);
-    const autoAnswer = "Спасибо за ваш отзыв!";
+const autoAnswer = "Спасибо за ваш отзыв!";
 
-    const addMessage = (message, author) => {
+export function App() {
+    const [name, setName] = useState('');
+    const [messages, setMessages] = useState([]);
+    const [message] = useState('');
+
+
+    const addMessage = (message, name) => {
         setMessages((messagesPrev) => [
-            ...messagesPrev, {author: author, text: message}
-        ])
+            ...messagesPrev,
+            { author: name, text: message },
+        ]);
     };
 
-    useEffect (() => {
-        let timeout
-        if (messages.length > 0 && messages[messages.length-1].author === author) {
+    useEffect(() => {
+        const messagePrev = messages[messages.length - 1];
+        console.log(messages.length);
+        
+        // console.log(message);
+        let timeout;
+        if (
+            messages.length > 0 &&
+            messages[messages.length - 1].author !== "Администратор"
+        ) {
+            console.log(messages.length);
+            console.log(messages[messages.length - 1].author);
             timeout = setTimeout(() => {
-                addMessage( autoAnswer, 'Администратор')
-            },1000);
+                addMessage(autoAnswer, "Администратор");
+                console.log(messagePrev.author);
+            }, 1500);
         }
-        return () => clearTimeout(timeout)
-    },[messages]);
+        return () => clearTimeout(timeout);
+    }, [messages, name]);
 
     return (
         <>
-            <MessageForm messageSetter={MessageForm} author={author} />
+            <MessageForm messageSetter={addMessage} author={name} />
             <br />
             <hr />
             <MessageList messageList={messages} />
         </>
     );
-};
+}
