@@ -1,0 +1,18 @@
+.App {
+    text-align: center;
+    font-size: calc(6px + 2vmin);
+}
+
+.Wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.WrapperMessage {
+    flex-grow: 1;
+    border: 2px solid #3599b4;
+    border-radius: 5px;
+    padding: 2px;
+    margin-top: 2px;
+    margin-right: 2px;
+}

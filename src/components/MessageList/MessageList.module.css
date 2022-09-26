@@ -1,0 +1,18 @@
+.messagelist {
+    margin: 0 auto;
+    padding: 0 2px;
+}
+
+.messagelistUl {
+    margin: 0 auto;
+    padding: 0;
+}
+
+.messagelistLi {
+    list-style-type: none;
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 2px;
+    margin: 2px 0;
+}

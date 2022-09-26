@@ -1,0 +1,15 @@
+.ChatListUl {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.ChatNavLink {
+    text-decoration: none;
+    color: #3599b4;
+}
+
+.activeChatLink {
+    text-decoration: none;
+    color: black;
+}
