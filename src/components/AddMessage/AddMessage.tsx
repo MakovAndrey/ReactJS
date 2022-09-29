@@ -22,29 +22,21 @@ export const AddMessage: FC<AddMessageProps> = memo(({ addMessage }) => {
     };
     const inputFocus = useRef(null);
 
-    // useEffect(() => {
-    //     inputFocus.current.current();
-    // });
-
     return (
-        <>
             <form
                 action="#"
                 onSubmit={handleAddMessage}
-                data-testid="addmessage"
-            >
+                data-testid="addmessage">
                 <input
                     type="text"
                     value={message}
                     placeholder="Type message"
                     onChange={(ev) => setMessage(ev.target.value)}
                     role="input"
-                    ref={inputFocus}
-                />
+                    ref={inputFocus}/>
                 <Button disabled={!message} role="button" type="submit">
                     Submit
                 </Button>
             </form>
-        </>
     );
 });

@@ -6,22 +6,14 @@ interface MessageListProps {
     messages: Message[];
 }
 
-export const MessageList: FC<MessageListProps> = ({ messages }) => {
-    return (
-        <>
-            <div className={style.messagelist}>
-                <ul className={style.messagelistUl}>
-                    {messages.map((message, idx) => (
-                        <li
-                            className={style.messagelistLi}
-                            key={idx}
-                            data-testid="li"
-                        >
-                            {message.author}: {message.message}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </>
-    );
-};
+export const MessageList: FC<MessageListProps> = ({ messages }) => (
+    <div className={style.messagelist}>
+        <ul className={style.messagelistUl}>
+            {messages.map((message, idx) => (
+                <li className={style.messagelistLi} key={idx} data-testid="li">
+                    {message.author}: {message.message}
+                </li>
+            ))}
+        </ul>
+    </div>
+);
