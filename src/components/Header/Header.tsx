@@ -2,21 +2,23 @@ import { FC } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import style from "../Header/Header.module.css";
 
+const navigate = [
+    {
+        name: "Main",
+        path: "/",
+    },
+    {
+        name: "Chats",
+        path: "/chats",
+    },
+    {
+        name: "Profile",
+        path: "/profile",
+    },
+];
+
 export const Header: FC = () => {
-    const navigate = [
-        {
-            name: "Main",
-            path: "/",
-        },
-        {
-            name: "Chats",
-            path: "/chats",
-        },
-        {
-            name: "Profile",
-            path: "/profile",
-        },
-    ];
+    
     return (
         <>
             <header className={style.Appheader}>

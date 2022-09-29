@@ -28,36 +28,28 @@ export const ChatList: FC<ChatListProps> = ({ chats, onAddChat, delChat }) => {
     };
 
     return (
-        <>
-            <div>
-                <List className={style.ChatListUl}>
-                    {chats.map((chat) => (
-                        <NavLink
-                            to={`/chats/${chat.id}`}
-                            key={chat.id}
-                            data-testid="li"
-                            className={({ isActive }) =>
-                                isActive
-                                    ? style.activeChatLink
-                                    : style.ChatNavLink
-                            }
-                        >
-                            {chat.name}{" "}
-                            <button onClick={() => delChat(chat.id)}>
-                                del
-                            </button>
-                        </NavLink>
-                    ))}
-                </List>
-                <form action="#" onSubmit={handlerSubmit}>
-                    <input
-                        type="text"
-                        value={value}
-                        onChange={(ev) => setValue(ev.target.value)}
-                    />
-                    <button>create new chat</button>
-                </form>
-            </div>
-        </>
+        <div>
+            <List className={style.ChatListUl}>
+                {chats.map((chat) => (
+                    <NavLink
+                        to={`/chats/${chat.id}`}
+                        key={chat.id}
+                        data-testid="li"
+                        className={({ isActive }) =>
+                            isActive ? style.activeChatLink : style.ChatNavLink
+                        }>
+                        {chat.name}{" "}
+                        <button onClick={() => delChat(chat.id)}>del</button>
+                    </NavLink>
+                ))}
+            </List>
+            <form action="#" onSubmit={handlerSubmit}>
+                <input
+                    type="text"
+                    value={value}
+                    onChange={(ev) => setValue(ev.target.value)}/>
+                <button>create new chat</button>
+            </form>
+        </div>
     );
 };

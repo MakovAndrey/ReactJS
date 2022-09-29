@@ -1,6 +1,6 @@
-import React, { FC, useEffect, useState, useRef, memo } from "react";
+import React, { FC, useState, useRef, memo } from "react";
 import { Button } from "@mui/material";
-import { AUTHOR, Message } from "src/types";
+import { AUTHOR, Message } from "../../types";
 import { useParams } from "react-router-dom";
 
 interface AddMessageProps {
@@ -22,29 +22,24 @@ export const AddMessage: FC<AddMessageProps> = memo(({ addMessage }) => {
     };
     const inputFocus = useRef(null);
 
-    // useEffect(() => {
-    //     inputFocus.current.current();
-    // });
-
     return (
-        <>
-            <form
-                action="#"
-                onSubmit={handleAddMessage}
+        <form action="#" onSubmit={handleAddMessage}>
+            <input
+                type="text"
+                value={message}
+                placeholder="Type message"
+                onChange={(ev) => setMessage(ev.target.value)}
+                role="input"
+                ref={inputFocus}
+            />
+            <Button
                 data-testid="addmessage"
+                disabled={!message}
+                role="button"
+                type="submit"
             >
-                <input
-                    type="text"
-                    value={message}
-                    placeholder="Type message"
-                    onChange={(ev) => setMessage(ev.target.value)}
-                    role="input"
-                    ref={inputFocus}
-                />
-                <Button disabled={!message} role="button" type="submit">
-                    Submit
-                </Button>
-            </form>
-        </>
+                Submit
+            </Button>
+        </form>
     );
 });
