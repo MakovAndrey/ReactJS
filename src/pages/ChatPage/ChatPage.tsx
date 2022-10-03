@@ -1,27 +1,18 @@
 import { FC, useEffect } from "react";
 import { Navigate, useParams } from "react-router-dom";
+import {useSelector, useDispatch} from 'react-redux';
+import { selectMessages } from 'src/store/messages/selectors'
 import style from "./ChatPage.module.css";
 import { ChatList } from "src/components/ChatList";
 import { AddMessage } from "src/components/AddMessage/index";
 import { MessageList } from "src/components/MessageList/MessageList";
-import { AUTHOR, Chat, Message, Messages } from "src/types";
+import { AUTHOR, Message } from "src/types";
+import { addMessage } from "src/store/messages/actions";
 
-interface ChatPageProps {
-    chats: Chat[];
-    onAddChat: (chat: Chat) => void;
-    messages: Messages;
-    onAddMessage: (chatId: string, msg: Message) => void;
-    delChat: (chatId: string) => void;
-}
-
-export const ChatPage: FC<ChatPageProps> = ({
-    chats,
-    onAddChat,
-    messages,
-    onAddMessage,
-    delChat,
-}) => {
+export const ChatPage: FC = () => {
     const { chatId } = useParams();
+    const messages = useSelector(selectMessages);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (
@@ -30,15 +21,17 @@ export const ChatPage: FC<ChatPageProps> = ({
             messages[chatId][messages[chatId].length - 1].author === AUTHOR.USER
         ) {
             const timeout = setTimeout(() => {
-                onAddMessage(chatId, {
-                    author: AUTHOR.BOT,
-                    message: "some response",
-                });
+                dispatch(
+                    addMessage(chatId, {
+                        author: AUTHOR.BOT,
+                        message: "some response",
+                    })
+                );
             }, 1500);
 
             return () => clearTimeout(timeout);
         }
-    }, [chatId, messages, onAddMessage]);
+    }, [chatId, messages, dispatch]);
 
     if (chatId && !messages[chatId]) {
         return <Navigate to="/chats" replace />;
@@ -48,16 +41,10 @@ export const ChatPage: FC<ChatPageProps> = ({
         <>
             <div className={style.App}>
                 <main className={style.Wrapper}>
-                    <ChatList
-                        chats={chats}
-                        onAddChat={onAddChat}
-                        delChat={delChat}
-                    />
+                    <ChatList />
                     <div className={style.WrapperMessage}>
-                        <MessageList
-                            messages={chatId ? messages[chatId] : []}
-                        />
-                        <AddMessage addMessage={onAddMessage} />
+                        <MessageList messages={chatId ? messages[chatId] : []} />
+                        <AddMessage  />
                     </div>
                 </main>
             </div>

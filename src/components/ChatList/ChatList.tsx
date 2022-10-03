@@ -1,28 +1,24 @@
-import { FC } from "react";
-import { Chat } from "src/types";
+import { FC, useState, useEffect } from "react";
 import { List } from "@mui/material";
-import { useState } from "react";
-import { nanoid } from "nanoid";
 import { NavLink } from "react-router-dom";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { addChat, deleteChat } from "src/store/messages/actions";
+import { selectChats } from "src/store/messages/selectors";
 import style from "../ChatList/ChatList.module.css";
 
-interface ChatListProps {
-    chats: Chat[];
-    onAddChat: (chat: Chat) => void;
-    delChat: (chatId: string) => void;
-}
-
-export const ChatList: FC<ChatListProps> = ({ chats, onAddChat, delChat }) => {
+export const ChatList: FC = () => {
     const [value, setValue] = useState("");
+    const dispatch = useDispatch();
+    const chats = useSelector(
+        selectChats,
+        (prev, next) => prev.length === next.length
+    );
 
     const handlerSubmit = (ev: React.ChangeEvent<HTMLFormElement>) => {
         ev.preventDefault();
 
         if (value) {
-            onAddChat({
-                id: nanoid(),
-                name: value,
-            });
+            dispatch(addChat(value));
             setValue("");
         }
     };
@@ -32,14 +28,17 @@ export const ChatList: FC<ChatListProps> = ({ chats, onAddChat, delChat }) => {
             <List className={style.ChatListUl}>
                 {chats.map((chat) => (
                     <NavLink
-                        to={`/chats/${chat.id}`}
+                        to={`/chats/${chat.name}`}
                         key={chat.id}
                         data-testid="li"
                         className={({ isActive }) =>
                             isActive ? style.activeChatLink : style.ChatNavLink
-                        }>
+                        }
+                    >
                         {chat.name}{" "}
-                        <button onClick={() => delChat(chat.id)}>del</button>
+                        <button onClick={() => dispatch(deleteChat(chat.name))}>
+                            del
+                        </button>
                     </NavLink>
                 ))}
             </List>
@@ -47,7 +46,8 @@ export const ChatList: FC<ChatListProps> = ({ chats, onAddChat, delChat }) => {
                 <input
                     type="text"
                     value={value}
-                    onChange={(ev) => setValue(ev.target.value)}/>
+                    onChange={(ev) => setValue(ev.target.value)}
+                />
                 <button>create new chat</button>
             </form>
         </div>
