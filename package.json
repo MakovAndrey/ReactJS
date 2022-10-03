@@ -21,6 +21,7 @@
         "webpack": "^5.64.4",
         "react-redux": "^8.0.4",
         "react-scripts": "^5.0.1",
+        "styled-components": "^5.3.5",
         "webpack-dev-server": "^4.6.0"
     },
     "devDependencies": {
@@ -45,6 +46,7 @@
         "@testing-library/user-event": "^14.4.3",
         "@typescript-eslint/eslint-plugin": "^5.36.2",
         "@typescript-eslint/parser": "^5.36.2",
+        "@types/styled-components": "^5.1.26",
         "babel-jest": "^29.0.1",
         "babel-loader": "^8.2.5",
         "chromatic": "^6.10.0",
