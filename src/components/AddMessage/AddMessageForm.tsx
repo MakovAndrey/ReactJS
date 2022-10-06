@@ -3,27 +3,27 @@ import { Button } from "@mui/material";
 import { AUTHOR, Message } from "../../types";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addMessageWithReply } from "src/store/messages/actions";
+import { addMessageWithReply, AddMessage } from "src/store/messages/slice";
 import { Wrapper } from "./styled";
 import { ThemeContext } from "src/utils/ThemeContext";
 import { ThunkDispatch } from "redux-thunk";
 import { StoreState } from "src/store";
-import { AddMessage } from "src/store/messages/types";
+
 
 
 export const AddMessageForm: FC = memo(() => {
     const [message, setMessage] = useState("");
     const { chatId } = useParams();
-    const dispatch = useDispatch<ThunkDispatch<StoreState, void, AddMessage>>();;
+    const dispatch = useDispatch<ThunkDispatch<StoreState, void, any>>();;
     const { theme, toggleTheme } = useContext(ThemeContext);
 
     const handleAddMessage = (ev: React.FormEvent<HTMLFormElement>) => {
         ev.preventDefault();
         if (chatId) {
             dispatch(
-                addMessageWithReply(chatId, {
-                    author: AUTHOR.USER,
-                    message,
+                addMessageWithReply({
+                    chatName: chatId,
+                    message: { author: AUTHOR.USER, message },
                 })
             );
             setMessage("");
