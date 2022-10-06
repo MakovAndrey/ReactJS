@@ -1,1 +1,1 @@
-export { AddMessage } from "./AddMessage";
+export { AddMessageForm } from "./AddMessageForm";
