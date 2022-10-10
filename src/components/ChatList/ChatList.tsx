@@ -2,7 +2,7 @@ import { FC, useState, useEffect } from "react";
 import { List } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { addChat, deleteChat } from "src/store/messages/actions";
+import { addChat, deleteChat } from "src/store/messages/slice";
 import { selectChats } from "src/store/messages/selectors";
 import style from "../ChatList/ChatList.module.css";
 
