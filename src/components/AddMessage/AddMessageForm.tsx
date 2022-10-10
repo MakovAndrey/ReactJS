@@ -14,7 +14,7 @@ import { StoreState } from "src/store";
 export const AddMessageForm: FC = memo(() => {
     const [message, setMessage] = useState("");
     const { chatId } = useParams();
-    const dispatch = useDispatch<ThunkDispatch<StoreState, void, any>>();;
+    const dispatch = useDispatch<ThunkDispatch<StoreState, void, any>>();
     const { theme, toggleTheme } = useContext(ThemeContext);
 
     const handleAddMessage = (ev: React.FormEvent<HTMLFormElement>) => {

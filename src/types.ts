@@ -1,6 +1,6 @@
 export interface Message {
-  author: string/*AUTHOR*/;
-  message: string;
+    author: AUTHOR;
+    message: string;
 }
 
 export interface MessageWIthId extends Message {

@@ -1,8 +1,11 @@
 import { FC } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import style from "../Header/Header.module.css";
+import { useSelector, useDispatch } from "react-redux";
+import { StoreState } from "src/store";
+import { auth } from "src/store/profile/slice";
 
-const navigate = [
+const nav = [
     {
         name: "Main",
         path: "/",
@@ -15,16 +18,35 @@ const navigate = [
         name: "Profile",
         path: "/profile",
     },
+    {
+        name: "About",
+        path: "/about",
+    },
+    {
+        name: "Articles",
+        path: "/articles",
+    },
 ];
 
 export const Header: FC = () => {
-    
+    const isAuth = useSelector((state: StoreState) => state.profile.isAuth);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        dispatch(auth(false));
+    };
+
+    const handleLogin = () => {
+        navigate("/signin");
+    };
+
     return (
         <>
             <header className={style.Appheader}>
                 <p>My first page React</p>
                 <ul className={style.HeaderUl}>
-                    {navigate.map((item, idx) => (
+                    {nav.map((item, idx) => (
                         <li
                             className={style.messagelistLi}
                             key={idx}
@@ -43,6 +65,11 @@ export const Header: FC = () => {
                 </ul>
             </header>
             <main>
+                {isAuth ? (
+                    <button onClick={handleLogout}>logout</button>
+                ) : (
+                    <button onClick={handleLogin}>login</button>
+                )}
                 <Outlet />
             </main>
         </>
