@@ -2,7 +2,7 @@ import { FC, useState, Suspense } from "react";
 import "./App.css";
 import { BrowserRouter } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
-import { persistor, store } from "./store";
+import { store } from "./store";
 import { AppRouter } from "./components/AppRouter";
 import { ThemeContext } from "./utils/ThemeContext";
 import { Provider } from "react-redux";
@@ -15,7 +15,7 @@ export const App: FC = () => {
     };
 
     return (
-        <PersistGate persistor={persistor}>
+        //<PersistGate persistor={persistor}>
             <Provider store={store}>
                 <ThemeContext.Provider value={{ theme, toggleTheme }}>
                     <Suspense fallback={<div>Loading...</div>}>
@@ -25,6 +25,6 @@ export const App: FC = () => {
                     </Suspense>
                 </ThemeContext.Provider>
             </Provider>
-        </PersistGate>
+       // </PersistGate>
     );
 };
