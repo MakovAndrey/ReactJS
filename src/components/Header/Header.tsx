@@ -4,6 +4,7 @@ import style from "../Header/Header.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { StoreState } from "src/store";
 import { auth } from "src/store/profile/slice";
+import { logOut } from "src/services/firebase";
 
 const nav = [
     {
@@ -33,28 +34,30 @@ export const Header: FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+    try {
+        await logOut();
+    } catch (err) {
+        console.log(err);
+    } finally {
         dispatch(auth(false));
-    };
-
-    const handleLogin = () => {
-        navigate("/signin");
-    };
+    }
+};
 
     return (
         <>
-            <header className={style.Appheader}>
+            <header className={style["Appheader"]}>
                 <p>My first page React</p>
-                <ul className={style.HeaderUl}>
+                <ul className={style["HeaderUl"]}>
                     {nav.map((item, idx) => (
                         <li
-                            className={style.messagelistLi}
+                            className={style["messagelistLi"]}
                             key={idx}
                             data-testid="li"
                         >
                             <NavLink
                                 className={({ isActive }) =>
-                                    isActive ? style.activeLink : style.NavLink
+                                    isActive ? style["activeLink"] : style["NavLink"]
                                 }
                                 to={item.path}
                             >
@@ -68,7 +71,10 @@ export const Header: FC = () => {
                 {isAuth ? (
                     <button onClick={handleLogout}>logout</button>
                 ) : (
-                    <button onClick={handleLogin}>login</button>
+                    <>
+                        <button onClick={() => navigate('/signin')}>login</button>
+                        <button onClick={() => navigate('/signup')}>singUp</button>
+                    </>
                 )}
                 <Outlet />
             </main>
